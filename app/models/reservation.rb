@@ -36,13 +36,4 @@ class Reservation < ActiveRecord::Base
     # end
   end
 
-  # Checks if checkout day happens after checkin day
-  def checkout_after_checkin
-    if self.checkout && self.checkin
-      if self.checkout <= self.checkin
-        errors.add(:guest_id, "Your checkin date needs to be after your checkout date")
-      end
-    end
-  end
-
 end
