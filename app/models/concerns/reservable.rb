@@ -11,6 +11,7 @@ module Reservable
       end
     end
 
+    # class_methods do
     def self.highest_ratio_res_to_listings
       self.all.max do |a,b|
         a.ratio_reservations_to_listings <=> b.ratio_reservations_to_listings
@@ -22,5 +23,7 @@ module Reservable
         a.reservations.count <=> b.reservations.count
       end
     end
+
+  # end
 
 end
