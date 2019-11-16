@@ -3,7 +3,6 @@ class Reservation < ActiveRecord::Base
   belongs_to :guest, :class_name => "User"
   has_one :review
 
-
   validates_presence_of :checkout, :checkin
   validate :guest_is_not_host, :valid_checkin_and_checkout, :check_availablity
 
@@ -30,10 +29,12 @@ class Reservation < ActiveRecord::Base
   end
 
   def check_availablity
-    # result = Reservation.where(listing_id == self.id, self.checkin(checkin..checkout), self.checkin(checkout..checkin))
-    # if result.size > 0
-    #   errors.add(:guest_id, "Error")
-    # end
+    Reservation.where(listing_id: listing.id).where.not(id: id).each do |r|
+      booked_dates = r.checkin..r.checkout
+      if booked_dates === checkin || booked_dates === checkout
+        errors.add(:guest_id, "Sorry, this place isn't available during your requested dates.")
+      end
+    end
   end
 
 end
