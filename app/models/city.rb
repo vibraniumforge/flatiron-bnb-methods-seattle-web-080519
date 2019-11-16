@@ -4,7 +4,9 @@ class City < ActiveRecord::Base
   has_many :reservations, through: :listings
 
   def city_openings(start_date, end_date)
-    Listing.where(created_at: ((start_date)..end_date))
+    binding.pry
+    Listing.where(self.created_at((start_date)..end_date))
+    # Reservation.where(listing_id == self.id, self.checkin(checkin..checkout), self.checkin(checkout..checkin))
   end
 
   def self.highest_ratio_res_to_listings
